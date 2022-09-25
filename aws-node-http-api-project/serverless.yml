@@ -1,0 +1,31 @@
+service: aws-node-http-api-project
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: sa-east-1
+
+	
+package:
+  patterns:
+    - '!node_modules/**'
+    - 'node_modules/node-fetch/**'
+
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /hello
+          method: get
+  goodbye:
+    handler: handler.now
+    events:
+      - httpApi:
+          path: /now
+          method: get
+
+plugins:
+  - serverless-offline

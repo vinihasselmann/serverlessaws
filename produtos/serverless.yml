@@ -1,0 +1,47 @@
+service: produtos
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: sa-east-1
+
+package:
+  patterns:
+    - '!node_modules/**'
+    - 'node_modules/node-fetch/**'
+
+functions:
+  createProduct:
+    handler: handler.createProduct
+    events:
+      - httpApi:
+          path: /product
+          method: post
+  getProduct:
+    handler: handler.getProduct
+    events:
+      - httpApi:
+          path: /product/:id
+          method: get
+  getAllProducts:
+    handler: handler.getAllProducts
+    events:
+      - httpApi:
+          path: /product
+          method: get
+  editProduct:
+    handler: handler.editProduct
+    events:
+      - httpApi:
+          path: /product/:id
+          method: put
+  deleteProduct:
+    handler: handler.deleteProduct
+    events:
+      - httpApi:
+          path: /product/:id
+          method: delete
+
+plugins:
+  - serverless-offline
